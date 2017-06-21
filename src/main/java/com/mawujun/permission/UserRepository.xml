@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.permission.UserRepository">
+	<select id="queryPage" resultType="com.mawujun.permission.User" parameterType="map">
+    	select * from t_user a
+    	where 1=1
+    	<if test="loginName!=null and loginName!=''">
+    		and lower(a.loginName) like lower('%${loginName}%')
+    	</if>
+    	
+    	<if test="name!=null and name!=''">
+    		and lower(a.name) like lower('%${name}%')
+    	</if>
+    </select> 
+     <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
+    <select id="queryPage_count" resultType="int" parameterType="map">
+    	select count(a.id)
+		from t_user a
+		where 1=1
+		<if test="loginName!=null and loginName!=''">
+    		and lower(a.loginName) like lower('%${loginName}%')
+    	</if>
+    	<if test="name!=null and name!=''">
+    		and lower(a.name) like lower('%${name}%')
+    	</if>
+    </select>
+	<!-- 查询语句，会自动分页-->
+    <select id="queryByRole" resultType="com.mawujun.permission.User" parameterType="map">
+    	select * from t_user a,t_role_user b
+    	where a.id=b.user_id and b.role_id=#{role_id}
+    	<if test="loginName!=null and loginName!=''">
+    		and lower(a.loginName) like lower('%${loginName}%')
+    	</if>
+    	<if test="name!=null and name!=''">
+    		and lower(a.name) like lower('%${name}%')
+    	</if>
+    </select> 
+     <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
+    <select id="queryByRole_count" resultType="int" parameterType="map">
+    	select count(*) from t_user a,t_role_user b
+    	where a.id=b.user_id and b.role_id=#{role_id}
+    	<if test="loginName!=null and loginName!=''">
+    		and lower(a.loginName) like lower('%${loginName}%')
+    	</if>
+    	<if test="name!=null and name!=''">
+    		and lower(a.name) like lower('%${name}%')
+    	</if>
+    </select>
+    
+    <!--根据职位 获取用户 -->
+    <select id="queryByPosition" resultType="com.mawujun.permission.User" parameterType="map">
+    	select a.* from t_user a,t_position_org_user b
+    	where a.id=b.user_id and b.position_id=#{position_id}
+    	<if test="loginName!=null and loginName!=''">
+    		and lower(a.loginName) like lower('%${loginName}%')
+    	</if>
+    	<if test="name!=null and name!=''">
+    		and lower(a.name) like lower('%${name}%')
+    	</if>
+    </select> 
+     <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
+    <select id="queryByPosition_count" resultType="int" parameterType="map">
+    	select count(a.id) from t_user a,t_position_org_user b
+    	where a.id=b.user_id and b.position_id=#{position_id}
+    	<if test="loginName!=null and loginName!=''">
+    		and lower(a.loginName) like lower('%${loginName}%')
+    	</if>
+    	<if test="name!=null and name!=''">
+    		and lower(a.name) like lower('%${name}%')
+    	</if>
+    </select>
+ 
+    <!-- 登录的时候用的-->
+    <select id="getByLoginName" resultType="com.mawujun.permission.UserVO" parameterType="map">
+    	select * from t_user a
+    	where lower(a.loginName)=lower(#{loginName})
+    </select> 
+    <delete id="deleteUserByLoginName" parameterType="map">
+    	delete t_user a where a.loginName=#{loginName}
+    </delete>
+    
+    
+    <select id="findPermissions" parameterType="string" resultType="string">
+		select c.url from t_role_user a,t_role_menu b,t_menu c
+		where a.role_id=b.role_id  and b.menu_id=c.id and c.url is not null and a.user_id=#{user_id} 
+	</select>
+	
+	<!-- 查询当前用户所属的组织的安远-->
+	<select id="queryCurrentOrg" resultType="com.mawujun.org.Org" parameterType="string">
+    	select b.* from t_position_org_user a,t_org b
+    	where a.org_orgno=b.orgno and a.user_id=#{user_id}
+    </select> 
+    
+    <!-- 检查某个用书是否具有 编辑 仓库的去权限-->
+	<select id="check_edit_store_permission" resultType="int">
+		select count(1) from t_position_org_user a,t_position_org_access b 
+		where a.position_id=b.position_id and a.user_id=#{user_id} and b.org_id=#{store_id} and b.edit=1
+	</select>
+	
+	
+	<select id="queryRoleByUser" resultType="com.mawujun.permission.RoleVO" parameterType="string">
+    	select a.* from t_role a ,t_role_user b
+		where a.id=b.role_id and b.user_id=#{user_id}
+    </select> 
+    <select id="queryOrgPositionByUser" resultType="com.mawujun.org.PositionVO" parameterType="string">
+    	select b.* from t_position_org_user a,t_position b
+		where a.position_id=b.id and a.user_id=#{user_id}
+    </select>
+	<select id="queryStoreByUser" resultType="com.mawujun.org.PositionOrgAccessVO" parameterType="string">
+    	select  max(a.look) look,max(a.edit) edit,b.id as org_id,b.code as org_code,b.name as org_name 
+       from T_POSITION_ORG_ACCESS a 
+       inner join t_position_org_user c on a.position_id=c.position_id and c.user_id=#{user_id} 
+       right join T_ORG b on a.org_id=b.id
+       
+       where   b.ORGTYPE in ('store_build','store_prepare')
+       group by b.id,b.code,b.name
+    </select>
+    <select id="queryWorkunitByUser" resultType="com.mawujun.org.PositionOrgAccessVO" parameterType="string">
+    	select  max(a.look) look,max(a.edit) edit,b.id as org_id,b.code as org_code,b.name as org_name 
+       from T_POSITION_ORG_ACCESS a 
+       inner join t_position_org_user c on a.position_id=c.position_id and c.user_id=#{user_id}
+       right join T_ORG b on a.org_id=b.id
+       
+       where  b.ORGTYPE='workunit'
+       group by b.id,b.code,b.name
+    </select>
+    <select id="queryRepair_centreByUser" resultType="com.mawujun.org.PositionOrgAccessVO" parameterType="string">
+    	select  max(a.look) look,max(a.edit) edit,b.id as org_id,b.code as org_code,b.name as org_name 
+       from T_POSITION_ORG_ACCESS a 
+       inner join t_position_org_user c on a.position_id=c.position_id and c.user_id=#{user_id}
+       right join T_ORG b on a.org_id=b.id
+       where b.ORGTYPE='repair_centre'
+       group by b.id,b.code,b.name
+    </select>
+</mapper>
+

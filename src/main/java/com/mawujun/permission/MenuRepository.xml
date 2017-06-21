@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.permission.MenuRepository">
+	<!-- 查询语句，会自动分页-->
+    <select id="queryPage" resultType="com.mawujun.permission.Menu" parameterType="map">
+    	select * from t_menu a
+    	order by a.sort
+    </select> 
+     <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
+    <select id="queryPage_count" resultType="int" parameterType="map">
+    	select count(a.id)
+		from t_menu a
+    </select>
+    
+    <!--
+    在分配权限的时候，生成菜单树的
+     -->
+     <select id="query_checkbox" resultType="com.mawujun.permission.MenuVO" parameterType="map">
+    	select a.*,0 as checked from t_menu a 
+    	where
+    	<if test="parent_id==null">
+    		parent_id is null
+    	</if>
+    	<if test="parent_id!=null">
+    		parent_id=#{parent_id}
+    	</if>
+    	order by a.sort
+    </select> 
+    
+    <!-- 在登录后，获取某个用户可访问的菜单-->
+    <select id="queryByUser" resultType="com.mawujun.permission.MenuVO" parameterType="map">
+    	select a.* from t_menu a , t_role_user b,t_role_menu c
+    	where a.menuType='menu' and b.role_id=c.role_id  and c.menu_id=a.id and a.ismobile=0
+    	<if test="parent_id==null">
+    		and a.parent_id is null
+    	</if>
+    	<if test="parent_id!=null">
+    		and a.parent_id=#{parent_id}
+    	</if>
+    	<if test="user_id!=null ">
+    		and b.user_id =#{user_id}
+    	</if>
+    	order by a.sort
+    </select> 
+    
+    <select id="queryMobileMenuByUser" resultType="com.mawujun.permission.Menu" parameterType="map">
+    	select a.* from t_menu a , t_role_user b,t_role_menu c
+    	where a.menuType='element' and b.role_id=c.role_id  and c.menu_id=a.id 
+    	<if test="user_id!=null ">
+    		and b.user_id =#{user_id}
+    	</if>
+    	and	 a.ismobile=1
+    </select> 
+    
+    
+     <!-- 在打开一个页面的时候，获取这个页面的界面元素控制情况-->
+    <select id="queryElement" resultType="com.mawujun.permission.Menu" parameterType="map">
+    	select a.* from t_menu a,t_menu b,t_role_menu c,t_role_user d
+		where a.parent_id=b.id and a.id=c.menu_id and c.role_id=d.role_id 
+		and d.user_id=#{user_id} and b.url=#{jsp_url}
+		order by a.sort
+    </select>
+</mapper>
+
