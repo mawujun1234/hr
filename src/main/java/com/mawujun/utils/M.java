@@ -1,5 +1,17 @@
 package com.mawujun.utils;
 public final class M {
+public static final class Constant {
+	public static final String id="id";
+	public static final String name="name";
+	public static final String sort="sort";
+}
+public static final class ConstantItem {
+	public static final String id="id";
+	public static final String name="name";
+	public static final String sort="sort";
+	public static final String status="status";
+	public static final String constant_id="constant_id";
+}
 public static final class Org {
 	public static final String id="id";
 	public static final String name="name";
@@ -47,7 +59,6 @@ public static final class Menu {
 	public static final String name="name";
 	public static final String url="url";
 	public static final String leaf="leaf";
-	public static final String ismobile="ismobile";
 	public static final String menuType="menuType";
 	public static final String parent_id="parent_id";
 	public static final String sort="sort";
@@ -70,7 +81,6 @@ public static final class RoleMenu {
 		public static final String name="menu.name";
 		public static final String url="menu.url";
 		public static final String leaf="menu.leaf";
-		public static final String ismobile="menu.ismobile";
 		public static final String menuType="menu.menuType";
 		public static final String parent_id="menu.parent_id";
 		public static final String sort="menu.sort";
@@ -115,6 +125,7 @@ public static final class RoleUser {
 		public static final String email="user.email";
 		public static final String remark="user.remark";
 		public static final String state="user.state";
+		public static final String candel="user.candel";
 		public static final String lastlogintime="user.lastlogintime";
 			
 	    /**
@@ -152,6 +163,7 @@ public static final class User {
 	public static final String email="email";
 	public static final String remark="remark";
 	public static final String state="state";
+	public static final String candel="candel";
 	public static final String lastlogintime="lastlogintime";
 }
 }

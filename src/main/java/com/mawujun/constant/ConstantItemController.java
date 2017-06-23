@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mawujun.repository.cnd.Cnd;
+import com.mawujun.utils.M;
 import com.mawujun.utils.page.Pager;
 /**
  * @author mawujun qq:16064988 e-mail:mawujun1234@163.com 
@@ -37,10 +39,21 @@ public class ConstantItemController {
 		return constantItemService.queryPage(pager);
 	}
 
-	@RequestMapping("/constantItem/queryAll.do")
+	@RequestMapping("/constantItem/query4Combo.do")
 	@ResponseBody
-	public List<ConstantItem> queryAll() {	
-		List<ConstantItem> constantItemes=constantItemService.queryAll();
+	public List<ConstantItem> query4Combo(String constant_id,Boolean showBlank,Boolean status,String query) {	
+		List<ConstantItem> constantItemes=constantItemService.query(Cnd.select()
+				.andEquals(M.ConstantItem.constant_id, constant_id)
+				.andEquals(M.ConstantItem.status, status)
+				.andLike(M.ConstantItem.name, query, true)
+			);
+		
+		if(showBlank!=null && showBlank==true){
+			ConstantItem wu=new ConstantItem();
+			wu.setId("");
+			wu.setName("无");
+			constantItemes.add(0, wu);
+		}
 		return constantItemes;
 	}
 	
