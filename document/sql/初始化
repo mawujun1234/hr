@@ -1,0 +1,32 @@
+drop user hr cascade;
+create user hr identified by hr;
+grant dba,connect,resource to hr;
+
+
+insert into hr.t_role(id,name,roletype) values('admin','admin','role');
+insert into hr.t_user(id,loginname,name,pwd,candel,state) values('admin','admin','admin','admin',0,1);
+insert into hr.t_role_user(user_id,role_id) values('admin','admin');
+Insert into hr.T_ROLE (ID,NAME,PARENT_ID,REMARK,ROLETYPE) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','作业单位',null,null,'role');
+
+--菜单
+Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,'menu','系统管理',null,null,0,null,0);
+Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('539ea37c-a286-4ae2-8a0b-cb4dab321515',null,'menu','菜单管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/MenuApp.jsp',1);
+Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('e35d2b7f-58c2-4e61-a50d-bc6112779b4c',null,'menu','角色管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/RoleApp.jsp',1);
+Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('a124a5f1-70a3-4dba-a014-68385edd922b',null,'menu','组织职位管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/org/OrgApp.jsp',1);
+Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('72d486d0-4724-4837-985f-e399d68ce52c',null,'menu','数据权限设置','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/DataPermissApp.jsp',1);
+Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('a3a58507-1c50-46f4-8316-6492d3d4b10e',null,'menu','职位类型','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/org/PositionTypeApp.jsp',1);
+Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('a7439ed8-ad09-452f-9860-27157c9027d9',null,'menu','用户管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/UserApp.jsp',1);
+
+
+--角色访问的基础菜单
+Insert into hr.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7');
+Insert into hr.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','539ea37c-a286-4ae2-8a0b-cb4dab321515');
+Insert into hr.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a124a5f1-70a3-4dba-a014-68385edd922b');
+Insert into hr.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a3a58507-1c50-46f4-8316-6492d3d4b10e');
+Insert into hr.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','a7439ed8-ad09-452f-9860-27157c9027d9');
+Insert into hr.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','e35d2b7f-58c2-4e61-a50d-bc6112779b4c');
+Insert into hr.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','72d486d0-4724-4837-985f-e399d68ce52c');
+
+
+
+alter table T_CONSTANTITEM add constraint constantitem_constant_id foreign key (CONSTANT_ID) references t_constant (ID);

@@ -18,7 +18,6 @@ package com.mawujun.config;
 
 import java.util.Properties;
 
-import javax.management.RuntimeErrorException;
 import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

@@ -26,6 +26,7 @@ public class User implements IShiroUser{
 	@FieldDefine(title="id",hidden=true)
 	@Column(length=36)
 	private String id;
+	
 	@FieldDefine(title="姓名",hidden=false,genQuery=true,sort=5)
 	@Column(length=50,nullable=false)
 	private String name;
@@ -51,7 +52,7 @@ public class User implements IShiroUser{
 	@FieldDefine(title="状态",sort=4,showType=ShowType.combobox,hidden=false)//
 	private Boolean state;
 	
-	
+	private Boolean candel=true;//是否允许删除，默认是允许删除，admin不允许删除
 	private Date lastlogintime;
 
 	
@@ -87,16 +88,6 @@ public class User implements IShiroUser{
 		this.remark = remark;
 	}
 
-	public String getLoginName() {
-		return loginName;
-	}
-
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-
-
-
 	public String getPhone() {
 		return phone;
 	}
@@ -129,6 +120,34 @@ public class User implements IShiroUser{
 	public void setLastlogintime(Date lastlogintime) {
 		this.lastlogintime = lastlogintime;
 	}
+
+
+	public Boolean getState() {
+		return state;
+	}
+
+	public void setState(Boolean state) {
+		this.state = state;
+	}
+
+	@Override
+	public String getLoginName() {
+		// TODO Auto-generated method stub
+		return loginName;
+	}
+
+	public Boolean getCandel() {
+		return candel;
+	}
+
+	public void setCandel(Boolean candel) {
+		this.candel = candel;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
 
 
 }

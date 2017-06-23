@@ -51,7 +51,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	</if>
     </select>
     
-    <!--根据职位 获取用户 -->
+    <!--根据职位 获取用户 
     <select id="queryByPosition" resultType="com.mawujun.permission.User" parameterType="map">
     	select a.* from t_user a,t_position_org_user b
     	where a.id=b.user_id and b.position_id=#{position_id}
@@ -61,8 +61,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	<if test="name!=null and name!=''">
     		and lower(a.name) like lower('%${name}%')
     	</if>
-    </select> 
-     <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
+    </select> -->
+     <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能
     <select id="queryByPosition_count" resultType="int" parameterType="map">
     	select count(a.id) from t_user a,t_position_org_user b
     	where a.id=b.user_id and b.position_id=#{position_id}
@@ -72,7 +72,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     	<if test="name!=null and name!=''">
     		and lower(a.name) like lower('%${name}%')
     	</if>
-    </select>
+    </select>-->
  
     <!-- 登录的时候用的-->
     <select id="getByLoginName" resultType="com.mawujun.permission.UserVO" parameterType="map">
@@ -89,23 +89,24 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		where a.role_id=b.role_id  and b.menu_id=c.id and c.url is not null and a.user_id=#{user_id} 
 	</select>
 	
-	<!-- 查询当前用户所属的组织的安远-->
+	<!-- 查询当前用户所属的组织的安远
 	<select id="queryCurrentOrg" resultType="com.mawujun.org.Org" parameterType="string">
     	select b.* from t_position_org_user a,t_org b
     	where a.org_orgno=b.orgno and a.user_id=#{user_id}
-    </select> 
+    </select> -->
     
-    <!-- 检查某个用书是否具有 编辑 仓库的去权限-->
+    <!-- 检查某个用书是否具有 编辑 仓库的去权限
 	<select id="check_edit_store_permission" resultType="int">
 		select count(1) from t_position_org_user a,t_position_org_access b 
 		where a.position_id=b.position_id and a.user_id=#{user_id} and b.org_id=#{store_id} and b.edit=1
-	</select>
+	</select>-->
 	
 	
 	<select id="queryRoleByUser" resultType="com.mawujun.permission.RoleVO" parameterType="string">
     	select a.* from t_role a ,t_role_user b
 		where a.id=b.role_id and b.user_id=#{user_id}
     </select> 
+    <!--
     <select id="queryOrgPositionByUser" resultType="com.mawujun.org.PositionVO" parameterType="string">
     	select b.* from t_position_org_user a,t_position b
 		where a.position_id=b.id and a.user_id=#{user_id}
@@ -136,5 +137,6 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
        where b.ORGTYPE='repair_centre'
        group by b.id,b.code,b.name
     </select>
+    -->
 </mapper>
 

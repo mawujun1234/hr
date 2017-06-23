@@ -23,10 +23,10 @@ import com.mawujun.exception.BusinessException;
  *
  */
 public class ShiroAuthorizingRealm extends AuthorizingRealm {
-//	@Autowired
-//	private UserService userService;
-//	@Autowired
-//	private RoleService roleService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private RoleService roleService;
 
 
 	/**
@@ -35,26 +35,26 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
-//		UserVO user= (UserVO) principals.getPrimaryPrincipal();
-//		String user_id =user.getId();
-//		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-//		
-//		if(userService==null){
-//  		  //this.setUserService(SpringContextHolder.getBean(UserService.class));
-//			this.userService=SpringContextHolder.getBean(UserService.class);
-//  	  	}
-//		//authorizationInfo.setRoles(userService.findRoles(username));  
-//		authorizationInfo.setStringPermissions(userService.findPermissions(user_id));
-//
-////		//往User里面存放，可访问的品牌和可访问的大类
-////		user.setBrandes(roleService.queryUserSelBrand(user.getId()));
-////		user.setClasses(roleService.queryUserSelClass(user.getId()));
-//		
-//		//设置用户当前所属的组织单元
-//		//user.setCurrentOrges(userService.queryCurrentOrg(user.getId()));
-//		
-//		return authorizationInfo;
-		return null;
+		UserVO user= (UserVO) principals.getPrimaryPrincipal();
+		String user_id =user.getId();
+		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+		
+		if(userService==null){
+  		  //this.setUserService(SpringContextHolder.getBean(UserService.class));
+			this.userService=SpringContextHolder.getBean(UserService.class);
+  	  	}
+		//authorizationInfo.setRoles(userService.findRoles(username));  
+		authorizationInfo.setStringPermissions(userService.findPermissions(user_id));
+
+//		//往User里面存放，可访问的品牌和可访问的大类
+//		user.setBrandes(roleService.queryUserSelBrand(user.getId()));
+//		user.setClasses(roleService.queryUserSelClass(user.getId()));
+		
+		//设置用户当前所属的组织单元
+		//user.setCurrentOrges(userService.queryCurrentOrg(user.getId()));
+		
+		return authorizationInfo;
+		//return null;
 	}
 
 	@Override
@@ -66,33 +66,33 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 
 	      
 	      if( username != null && !"".equals(username) ){ 
-//	    	  if(userService==null){
-//	    		 //this.setUserService(SpringContextHolder.getBean(UserService.class));
-//	  			this.userService=SpringContextHolder.getBean(UserService.class);
-//	    	  }
-//	    	  UserVO user = userService.getByLoginName( username ); 
-//	    	  if(token instanceof UsernamePasswordToken1){
-//	    		  //移动端扫描登录的时候
-//	    		  if(((UsernamePasswordToken1)token).getIsscan()==true){
-//	    			  user.setPwd(user.getLoginName().toLowerCase());
-//	    		  }
-//	    	  }
-//	    	  if(user == null) {  
-//	              throw new BusinessException("该账号不存在!");//没找到帐号  
+	    	  if(userService==null){
+	    		 //this.setUserService(SpringContextHolder.getBean(UserService.class));
+	  			this.userService=SpringContextHolder.getBean(UserService.class);
+	    	  }
+	    	  UserVO user = userService.getByLoginName( username ); 
+	    	  if(token instanceof UsernamePasswordToken1){
+	    		  //移动端扫描登录的时候
+	    		  if(((UsernamePasswordToken1)token).getIsscan()==true){
+	    			  user.setPwd(user.getLoginName().toLowerCase());
+	    		  }
+	    	  }
+	    	  if(user == null) {  
+	              throw new BusinessException("该账号不存在!");//没找到帐号  
+	          }  
+//	          if(Boolean.TRUE.equals(user.getLocked())) {  
+//	              throw new LockedAccountException(); //帐号锁定  
 //	          }  
-////	          if(Boolean.TRUE.equals(user.getLocked())) {  
-////	              throw new LockedAccountException(); //帐号锁定  
-////	          }  
-//	         
-//	         if( user != null ){ 
-//	        	//MyAuthenticationInfo aa=new MyAuthenticationInfo(user,user.getPassword(),getName());
-//	        	//aa.setLoginTime(new Date());
-//	        	//return aa;
-//	        	user.setLoginDate(new Date());
-//	        	
-//	        	//doGetAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
-//	            return new SimpleAuthenticationInfo(user,user.getPwd(),getName()); 
-//	         } 
+	         
+	         if( user != null ){ 
+	        	//MyAuthenticationInfo aa=new MyAuthenticationInfo(user,user.getPassword(),getName());
+	        	//aa.setLoginTime(new Date());
+	        	//return aa;
+	        	user.setLoginDate(new Date());
+	        	
+	        	//doGetAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+	            return new SimpleAuthenticationInfo(user,user.getPwd(),getName()); 
+	         } 
 	      } 
 	      
 	      return null; 

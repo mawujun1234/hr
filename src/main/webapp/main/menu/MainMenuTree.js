@@ -19,57 +19,42 @@ Ext.define('Ems.main.menu.MainMenuTree', {
 			iconCls:"icon-list",
 			initComponent : function() {
 				this.store = Ext.create('Ext.data.TreeStore', {
-							root : {
-								text : '系统菜单',
-								leaf : false,
-								expanded : true
-							}
-						});
+					root : {
+						text : '系统菜单',
+						leaf : false,
+						expanded : true
+					},
+					autoLoad:false,
+					proxy:{
+						type:'ajax',
+						actionMethods: { read: 'POST' },
+						timeout :600000,
+						headers:{ 'Accept':'application/json;'},
+						writer:{
+							type:'json',
+							writeAllFields:true
+						},
+						url:Ext.ContextPath+'/menu/queryByUser.do'
+					}		
+				});
 				var vm = this.up('app-main').getViewModel()
 				//var menus = vm.get('systemMenu');
 				var root = this.store.getRootNode();
 				//root.appendChild(menus);
 				
 				Ext.Ajax.request({
-					url : Ext.ContextPath+'/menu/queryByUser.do',
+					url : Ext.ContextPath+'/user/queryCurrentUser.do',
 					
 					success : function(response) {
 						var text = response.responseText;
+						//console.log(text);
 								// 将字段串转换成本地变量
 						var applicationInfo = Ext.decode(text);
-								// 把从后台传过来的参数加入到data中去
-						//Ext.apply(me.data.systemMenu, applicationInfo.systemMenu);
-						//Ext.apply(me.data.user, applicationInfo.user);
-						root.appendChild(applicationInfo.systemMenu);
-						//vm.data.user.loginName='aaa';
-						vm.set("user",applicationInfo.user);
+						vm.set("user",applicationInfo);
 					}
 				});
 				
-//				for (var i in menus) {
-//					var menugroup = menus[i];
-//					var menuitem = root.appendChild({
-//								text : menugroup.text,
-//								// 节点默认是否展开
-//								expanded : menugroup.expanded,
-//								icon : menugroup.icon,
-//								glyph : menugroup.glyph
-//							});
-//					for (var j in menugroup.items) {
-//						var menumodule = menugroup.items[j];
-//
-//						//var module = vm.getModuleDefine(menumodule.module);
-//						//if (module) {
-//							var childnode = {
-//								moduleId : menumodule.module,
-//								moduleName : menumodule.text,
-//								text : menumodule.text,
-//								leaf : true
-//							};
-//							menuitem.appendChild(childnode);
-//						//}
-//					}
-//				}
+
 				this.callParent(arguments);
 			}
 		})

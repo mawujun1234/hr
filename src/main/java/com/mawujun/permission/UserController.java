@@ -3,7 +3,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -21,7 +23,6 @@ import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -100,6 +101,16 @@ public class UserController {
              return successUrl;
         }  
        // return model;
+	}
+	@RequestMapping("/user/queryCurrentUser.do")
+	@ResponseBody
+	public UserVO queryCurrentUser(String user_id) {
+//		Map<String,Object> user=new HashMap<String,Object>();
+//		user.put("loginName", ShiroUtils.getLoginName());
+//		user.put("userName", ShiroUtils.getUserName());
+//		return user;
+		return ShiroUtils.getAuthenticationInfo();
+
 	}
 	/**
 	 * 保持在线的请求

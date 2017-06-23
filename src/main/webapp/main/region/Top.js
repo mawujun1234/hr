@@ -102,7 +102,7 @@ Ext.define('Ems.main.region.Top', {
 						xtype : 'label',
 						style : 'color:grey;',
 						bind : {
-							text : '{user.userName}({user.loginName})'
+							text : '{user.name}({user.loginName})'
 						}
 					}, 
 					

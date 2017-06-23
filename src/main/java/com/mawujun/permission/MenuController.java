@@ -69,28 +69,44 @@ public class MenuController {
 		return result;
 	}
 
-	/**
-	 * 用户登录的时候获取可访问的菜单
-	 * @author mawujun qq:16064988 mawujun1234@163.com
-	 * @return
-	 */
+//	/**
+//	 * 用户登录的时候获取可访问的菜单
+//	 * @author mawujun qq:16064988 mawujun1234@163.com
+//	 * @return
+//	 */
+//	@RequestMapping("/menu/queryByUser.do")
+//	@ResponseBody
+//	public Map<String,Object> queryByUser() {	
+//		List<MenuVO> menues=menuService.queryByUser(null,ShiroUtils.getUserId());
+//		Map<String,Object> result=new HashMap<String,Object>();
+//		result.put("systemMenu", menues);
+//		Map<String,Object> user=new HashMap<String,Object>();
+//		user.put("loginName", ShiroUtils.getLoginName());
+//		user.put("userName", ShiroUtils.getUserName());
+//		result.put("user", user);
+//		return result;
+//	}
 	@RequestMapping("/menu/queryByUser.do")
 	@ResponseBody
-	public Map<String,Object> queryByUser() {	
+	public List<MenuVO> queryByUser() {	
+//		List<MenuVO> menues=menuService.queryByUser(null,ShiroUtils.getUserId());
+//		Map<String,Object> result=new HashMap<String,Object>();
+//		result.put("systemMenu", menues);
+//		Map<String,Object> user=new HashMap<String,Object>();
+//		user.put("loginName", ShiroUtils.getLoginName());
+//		user.put("userName", ShiroUtils.getUserName());
+//		result.put("user", user);
+//		return result;
+		
 		List<MenuVO> menues=menuService.queryByUser(null,ShiroUtils.getUserId());
-		Map<String,Object> result=new HashMap<String,Object>();
-		result.put("systemMenu", menues);
-		Map<String,Object> user=new HashMap<String,Object>();
-		user.put("loginName", ShiroUtils.getLoginName());
-		user.put("userName", ShiroUtils.getUserName());
-		result.put("user", user);
-		return result;
+		return menues;
 	}
 
 	@RequestMapping("/menu/queryAll.do")
 	@ResponseBody
-	public List<Menu> queryAll() {	
-		List<Menu> menues=menuService.queryAll();
+	public List<MenuVO> queryAll() {	
+		//List<Menu> menues=menuService.queryAll();
+		List<MenuVO> menues=menuService.queryByUser(null,ShiroUtils.getUserId());
 		return menues;
 	}
 	

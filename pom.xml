@@ -29,9 +29,9 @@
 				<finalName>dev</finalName>
 				<jdbc.dbType>oracle</jdbc.dbType>
 				<jdbc.driver>oracle.jdbc.driver.OracleDriver</jdbc.driver>
-				<jdbc.url>jdbc:oracle:thin:@localhost:1521:emsnew</jdbc.url>
-				<jdbc.username>emsnew</jdbc.username>
-				<jdbc.password>emsnew</jdbc.password>
+				<jdbc.url>jdbc:oracle:thin:@192.168.196.44:1521:hr</jdbc.url>
+				<jdbc.username>hr</jdbc.username>
+				<jdbc.password>hr</jdbc.password>
 				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
 				<reble.classes.dir>E:\eclipse\aaa\hr\target\classes</reble.classes.dir>
 				<reble.web-resources.dir>E:\eclipse\aaa\hr\target\m2e-wtp\web-resources</reble.web-resources.dir>
@@ -42,9 +42,9 @@
 			</activation>
 		</profile>
 		<profile>
-			<id>dev_mac</id>
+			<id>dev_home</id>
 			<properties>
-				<profiles.active>dev_mac</profiles.active>
+				<profiles.active>dev_home</profiles.active>
 				<log4j2.level>debug</log4j2.level>
 				<finalName>dev</finalName>
 				<jdbc.dbType>oracle</jdbc.dbType>
@@ -251,6 +251,7 @@
 				<!-- 是否替换资源中的属性 -->
 				<filtering>false</filtering>
 			</resource>
+			<!-- 
 			<resource>
 				<directory>src/main/webapp/www</directory>
 				<includes>
@@ -258,6 +259,7 @@
 				</includes>
 				<filtering>true</filtering>
 			</resource>
+			 -->
 		</resources>
 
 		<plugins>
@@ -267,7 +269,7 @@
 				<version>2.6</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<warSourceExcludes>www_demo/**,www/node_modules/**,www/src/**,www/*.js,www/*.json</warSourceExcludes>
+					<!--<warSourceExcludes>www_demo/**,www/node_modules/**,www/src/**,www/*.js,www/*.json</warSourceExcludes>-->
 				</configuration>
 			</plugin>
 			<plugin>
