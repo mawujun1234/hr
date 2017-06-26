@@ -45,7 +45,8 @@ public class ConstantItemController {
 		List<ConstantItem> constantItemes=constantItemService.query(Cnd.select()
 				.andEquals(M.ConstantItem.constant_id, constant_id)
 				.andEquals(M.ConstantItem.status, status)
-				.andLike(M.ConstantItem.name, query, true)
+				.andLikeIf(M.ConstantItem.name, query, true)
+				.asc(M.ConstantItem.sort)
 			);
 		
 		if(showBlank!=null && showBlank==true){

@@ -26,7 +26,17 @@ Ext.define('Ems.constant.ConstantItemForm',{
             afterLabelTextTpl: Ext.required,
             blankText:"编码不允许为空",
             selectOnFocus:true,
-	        xtype:'textfield'
+	        xtype:'textfield',
+	        listeners:{
+	        	blur:function(field){
+	        		var newValue=field.getValue();
+	        		var constant_id=field.up("form").getForm().findField("constant_id").getValue();
+	        		if(newValue.indexOf(constant_id)!=0){
+	        			field.setValue(constant_id+"-"+newValue);
+	        		}
+	        	}
+	        
+	        }
 	    },
 		{
 	        fieldLabel: '名称',
@@ -53,6 +63,7 @@ Ext.define('Ems.constant.ConstantItemForm',{
            		{
                     boxLabel  : '可用',
                     name: 'status',
+                    checked:true,
                     inputValue: 'true'
                 },{
                     boxLabel  : '禁用',

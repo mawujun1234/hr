@@ -32,7 +32,7 @@ Ext.define('Ems.constant.ConstantItemGrid',{
 	  me.store=Ext.create('Ext.data.Store',{
 			autoSync:false,
 			pageSize:50,
-			autoLoad:true,
+			autoLoad:false,
 			model: 'Ems.constant.ConstantItem',
 			proxy:{
 				type: 'ajax',
@@ -159,6 +159,7 @@ Ext.define('Ems.constant.ConstantItemGrid',{
 		
 		var formpanel=Ext.create('Ems.constant.ConstantItemForm',{});
 		formpanel.loadRecord(child);
+		formpanel.getForm().findField ( "id" ).setReadOnly (false);
 		
     	var win=Ext.create('Ext.window.Window',{
     		layout:'fit',
@@ -188,6 +189,7 @@ Ext.define('Ems.constant.ConstantItemGrid',{
 
 		var formpanel=Ext.create('Ems.constant.ConstantItemForm',{});
 		formpanel.loadRecord(record);
+		formpanel.getForm().findField ( "id" ).setReadOnly (true);
 		
     	var win=Ext.create('Ext.window.Window',{
     		layout:'fit',

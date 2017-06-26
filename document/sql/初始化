@@ -8,6 +8,11 @@ insert into hr.t_user(id,loginname,name,pwd,candel,state) values('admin','admin'
 insert into hr.t_role_user(user_id,role_id) values('admin','admin');
 Insert into hr.T_ROLE (ID,NAME,PARENT_ID,REMARK,ROLETYPE) values ('c2977910-8a4f-49a7-a04e-01d7dc3198c2','作业单位',null,null,'role');
 
+--组织单元根节点
+insert into hr_org (ID, ADDRESS, CODE, CREATEDATE, EMAIL, ENDDATE, FAX, INTRODUCTION, ISDEL, ISROOT, LAYER, NAME, OPERATETIME, OPERATOR_ID, ORGTYPE_ID, PARENT_ID, PHONENUMBER, POSTALCODE, SORT, STATUS, WEB)
+values ('root', null, 'root', null, null, null, null, null, 0, 1, 0, '根节点', null, null, null, null, null, null, 0, 1, null);
+
+
 --菜单
 Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,'menu','系统管理',null,null,0,null,0);
 Insert into hr.T_MENU (ID,CODE,MENUTYPE,NAME,PARENT_ID,REMARK,SORT,URL,LEAF) values ('539ea37c-a286-4ae2-8a0b-cb4dab321515',null,'menu','菜单管理','1eb1d9ea-075c-43c6-baa3-d36004f4d4b7',null,0,'/permission/MenuApp.jsp',1);
@@ -30,3 +35,4 @@ Insert into hr.T_ROLE_MENU (ROLE_ID,MENU_ID) values ('admin','72d486d0-4724-4837
 
 
 alter table T_CONSTANTITEM add constraint constantitem_constant_id foreign key (CONSTANT_ID) references t_constant (ID);
+alter table HR_ORG add constraint org_orgtype_id foreign key (ORGTYPE_ID) references t_constantitem (ID);

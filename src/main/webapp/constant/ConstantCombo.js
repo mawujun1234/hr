@@ -5,6 +5,7 @@
 	        fieldLabel: 'XXX',
 	        name: 'xxx',
 	        //selFirst:true,
+	        showBlank:false,
             allowBlank: false,
             afterLabelTextTpl: Ext.required,
             //value:'Y',

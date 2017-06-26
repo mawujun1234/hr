@@ -3,7 +3,7 @@ package com.mawujun.generator;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import com.mawujun.constant.ConstantItem;
+import com.mawujun.org.Org;
 
 import freemarker.template.TemplateException;
 /**
@@ -20,13 +20,13 @@ public class GeneratorCode {
 		ExtenConfig aa=new ExtenConfig();
 		aa.extjs_treeForm_model=false;
 		aa.extjs_packagePrefix="Ems";
-		aa.extjs_form_layoutColumns=-1;
+		aa.extjs_form_layoutColumns=-1;//form的布局是不是变成多列布局
 		
 		aa.extjs_grid_createDelUpd_button=true;
 		aa.extjs_grid_enable_cellEditing=false;
 		generatorService.setExtenConfig(aa);
 		
-		generatorService.generatorAllFile(ConstantItem.class);
+		generatorService.generatorAllFile(Org.class);
 
 	}
 	

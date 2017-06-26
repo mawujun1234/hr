@@ -4,11 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import com.mawujun.generator.model.FieldDefine;
 /**
@@ -16,8 +13,8 @@ import com.mawujun.generator.model.FieldDefine;
  * @author mawujun qq:16064988 mawujun1234@163.com
  *
  */
-@Entity
-@Table(name="hr_org_change")
+//@Entity
+//@Table(name="hr_org_change")
 public class OrgChange {
 	@Id
 	@FieldDefine(title="id",sort=7,hidden=true)

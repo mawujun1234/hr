@@ -1,8 +1,7 @@
-Ext.define('Ems.org.OrgForm',{
+Ext.define('Ems.org.OrgFormRead',{
 	extend:'Ext.form.Panel',
 	requires: [
-	     'Ems.org.Org',
-	     'Ems.constant.ConstantCombo'
+	     'Ems.org.Org'
 	],
 	
     frame: true,
@@ -23,30 +22,27 @@ Ext.define('Ems.org.OrgForm',{
 		{
 	        fieldLabel: '名称',
 	        name: 'name',
-	        allowBlank: false,
-            afterLabelTextTpl: Ext.required,
             selectOnFocus:true,
 	        xtype:'textfield'
 	    },
 		{
 	        fieldLabel: '编码',
 	        name: 'code',
-	        allowBlank: false,
-            afterLabelTextTpl: Ext.required,
             selectOnFocus:true,
 	        xtype:'textfield'
 	    },
-		 {
+	    {
 	        fieldLabel: '组织单元类型',
 	        name: 'orgtype_id',
-	        //selFirst:true,
-	        showBlank:false,
-            allowBlank: false,
-            afterLabelTextTpl: Ext.required,
-            //value:'Y',
-            blankText:"组织单元类型不允许为空",
-	        xtype:'constantcombo',
-	        constant_id:'orgtype'
+	        hidden:true,
+            selectOnFocus:true,
+	        xtype:'textfield'
+	    },
+		{
+	        fieldLabel: '组织单元类型',
+	        name: 'orgtype_name',
+            selectOnFocus:true,
+	        xtype:'textfield'
 	    },
 		{
 	        fieldLabel: '排序',
@@ -97,7 +93,7 @@ Ext.define('Ems.org.OrgForm',{
             selectOnFocus:true,
 	        xtype:'textfield'
 	    },		
-
+		
         {
         	fieldLabel: 'isroot',
             name:'isroot',
@@ -130,16 +126,21 @@ Ext.define('Ems.org.OrgForm',{
         {
 	        fieldLabel: '操作者',
 	        name: 'operator_id',
+	        hidden:true,
             selectOnFocus:true,
-            hidden:true,
+	        xtype:'textfield'
+	    },
+	    {
+	        fieldLabel: '操作者',
+	        name: 'operator_name',
+            selectOnFocus:true,
 	        xtype:'textfield'
 	    },
 		{
             fieldLabel: '最后操作时间',
             name: 'operatetime',
             editable:false,
-            xtype: 'datefield',
-            hidden:true,
+            xtype: 'textfield',
             format: 'Y-m-d'   
         },
 		{
@@ -175,33 +176,42 @@ Ext.define('Ems.org.OrgForm',{
 	  ];   
 	  
 	  
-	  this.buttons = [];
-		this.buttons.push({
-			text : '保存',
-			itemId : 'save',
-			formBind: true, //only enabled once the form is valid
-       		disabled: true,
-			glyph : 0xf0c7,
-			handler : function(button){
-				var formpanel = button.up('form');
-				formpanel.updateRecord();
-				formpanel.getForm().getRecord().save({
-					failure: function(record, operation) {
-				    },
-				    success: function(record, operation) {
-						button.up('window').close();
-				    }
-				});			
-				
-				}
-			},{
-				text : '关闭',
-				itemId : 'close',
-				glyph : 0xf00d,
-				handler : function(button){
-					button.up('window').close();
-				}
-	    });
+//	  this.buttons = [];
+//		this.buttons.push({
+//			text : '保存',
+//			itemId : 'save',
+//			formBind: true, //only enabled once the form is valid
+//       		disabled: true,
+//			glyph : 0xf0c7,
+//			handler : function(button){
+//				var formpanel = button.up('form');
+//				formpanel.updateRecord();
+//				formpanel.getForm().getRecord().save({
+//					failure: function(record, operation) {
+//				    },
+//				    success: function(record, operation) {
+//						button.up('window').close();
+//				    }
+//				});			
+//				
+//				}
+//			},{
+//				text : '关闭',
+//				itemId : 'close',
+//				glyph : 0xf00d,
+//				handler : function(button){
+//					button.up('window').close();
+//				}
+//	    });
       me.callParent();
+	},
+	load:function(id){
+		var me=this;
+		Ems.org.Org.load(id,{
+			success:function(record){
+				//alert(record.get("name"));
+				me.loadRecord(record);
+			}
+		});
 	}
 });

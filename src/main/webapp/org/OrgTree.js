@@ -13,17 +13,16 @@ Ext.define('Ems.org.OrgTree', {
 	       	autoLoad:true,
 	       	nodeParam :'parent_id',//传递到后台的数据，默认是node
 	       	//model:'Ems.org.Org',
-	       	fields:['id','name','leaf','org_id','remark','type'],
+	       	fields:['id','name','leaf','parent_id','orgtype_id'],
 			root: {
 			    expanded: true,
-			    name:"宁波东望" 
+			    name:"根节点" 
 			},
 			proxy:{
 				type:'ajax',
-				url:Ext.ContextPath+'/org/queryNodeVO.do',
+				url:Ext.ContextPath+'/org/query.do',
 				actionMethods: { read: 'POST' },
 				timeout :600000,
-				extraParams:{dim:'base'},
 				headers:{ 'Accept':'application/json;'}
 			
 			}
@@ -40,62 +39,25 @@ Ext.define('Ems.org.OrgTree', {
 		if(!me.readOnly){
 			me.initAction();
 		}
-		me.initTbar();
+		//me.initTbar();
        
 		me.callParent(arguments);
     },
-
-    initTbar:function(){
-    	var me=this;
-    	//维度
-		//me.selected_dim="sale";
-		var dim_combobox=Ext.create('Ext.form.field.ComboBox',{
-			fieldLabel: '维度',
-			labelWidth:40,
-			name: 'dim',
-			queryMode: 'local',
-			editable:false,
-			forceSelection:true,
-		    displayField: 'name',
-		    valueField: 'key',
-		    store: {
-		    	autoLoad:true,
-			    fields: ['key', 'name'],
-			    proxy:{
-			    	actionMethods :{read: 'POST'},
-				    type: 'ajax',
-				    url: Ext.ContextPath+'/enum/queryDimes.do',
-				    reader: {
-				        type: 'json'
-				    }
-			    }
-			},
-			value:'base',
-            //allowBlank: false,
-            //afterLabelTextTpl: Ext.required,
-            //blankText:"菜单类型不允许为空",
-			xtype:'combobox',
-			listeners:{
-				select:function(combo, record){
-					//me.selected_dim=record.get("key");
-					me.getStore().getProxy().extraParams=Ext.apply(me.getStore().getProxy().extraParams,{
-						dim:record.get("key")
-					});
-					me.getStore().reload({node:me.getStore().getRoot()});
-				}
-			}
-		});
-		me.tbar={
-			itemId:'action_toolbar',
-			layout: {
-	               overflowHandler: 'Menu'
-	        },
-			items:[dim_combobox]
-			//,autoScroll:true		
-		};
-		me.dim_combobox=dim_combobox;
-		
-    },
+//
+//    initTbar:function(){
+//    	var me=this;
+//
+//		me.tbar={
+//			itemId:'action_toolbar',
+//			layout: {
+//	               overflowHandler: 'Menu'
+//	        },
+//			items:[dim_combobox]
+//			//,autoScroll:true		
+//		};
+//		me.dim_combobox=dim_combobox;
+//		
+//    },
     initAction:function(){
      	var me = this;
      	var actions=[];
@@ -155,38 +117,38 @@ Ext.define('Ems.org.OrgTree', {
 		actions.push(updateParentOrg);
 		
      	
-       var createPosition = new Ext.Action({
-		    text: '新建职位',
-		    itemId:'createPosition',
-		    handler: function(b){
-		    	me.onCreatePosition();
-		    },
-		    iconCls: 'icon-plus'
-		});
-		//me.addAction(create);
-		actions.push(createPosition);
-		
-		var updatePosition = new Ext.Action({
-		    text: '更新职位',
-		    itemId:'updatePosition',
-		    handler: function(){
-		    	me.onUpdatePosition();
-				
-		    },
-		    iconCls: 'icon-edit'
-		});
-		actions.push(updatePosition);
-		
-		var destroyPosition = new Ext.Action({
-		    text: '删除职位',
-		    itemId:'destroyPosition',
-		    handler: function(){
-		    	me.onDeletePosition();    
-		    },
-		    iconCls: 'icon-trash'
-		});
-		//me.addAction(destroy);
-		actions.push(destroyPosition)
+//       var createPosition = new Ext.Action({
+//		    text: '新建职位',
+//		    itemId:'createPosition',
+//		    handler: function(b){
+//		    	me.onCreatePosition();
+//		    },
+//		    iconCls: 'icon-plus'
+//		});
+//		//me.addAction(create);
+//		actions.push(createPosition);
+//		
+//		var updatePosition = new Ext.Action({
+//		    text: '更新职位',
+//		    itemId:'updatePosition',
+//		    handler: function(){
+//		    	me.onUpdatePosition();
+//				
+//		    },
+//		    iconCls: 'icon-edit'
+//		});
+//		actions.push(updatePosition);
+//		
+//		var destroyPosition = new Ext.Action({
+//		    text: '删除职位',
+//		    itemId:'destroyPosition',
+//		    handler: function(){
+//		    	me.onDeletePosition();    
+//		    },
+//		    iconCls: 'icon-trash'
+//		});
+//		//me.addAction(destroy);
+//		actions.push(destroyPosition)
 		
 		
 		
@@ -225,7 +187,7 @@ Ext.define('Ems.org.OrgTree', {
     		title:'新增',
     		modal:true,
     		width:400,
-    		height:300,
+    		height:400,
     		closeAction:'hide',
     		items:[formpanel],
     		listeners:{
@@ -313,8 +275,7 @@ Ext.define('Ems.org.OrgTree', {
 		
 		var child=Ext.create('Ems.org.Org',{
 		    'parent_id':parent.get("id"),
-		    state:'valid',
-		    'dim':me.getStore().getProxy().extraParams.dim
+		    status:1
 		});
 		child.set("id",null);
 		
@@ -398,7 +359,7 @@ Ext.define('Ems.org.OrgTree', {
 					url:Ext.ContextPath+'/org/destroy.do',
 					jsonData:node.getData(),
 					params:{
-						dim:me.getStore().getProxy().extraParams.dim
+						
 					},
 					headers:{ 'Accept':'application/json;'},
 					success:function(){
@@ -433,7 +394,7 @@ Ext.define('Ems.org.OrgTree', {
 			Ext.Msg.alert("消息","职位不能更改隶属关系！");
     		return;
     	}
-    	var orgTree=Ext.create('Ems.org.OrgOnlyTreeQuery',{
+    	var orgTree=Ext.create('Ems.org.OrgTreeQuery',{
     		exclude_id:node.get("id"),//这个节点，及子节点不显示，防止循环嵌套
     		listeners:{
     			itemdblclick:function( view , newparent , item , index , e , eOpts ) {
@@ -442,8 +403,7 @@ Ext.define('Ems.org.OrgTree', {
 						params:{
 							org_id:node.get("id"),
 							new_parent_id:newparent.get("id"),
-							old_parent_id:node.get("parent_id"),
-							dim:me.dim_combobox.getValue()
+							old_parent_id:node.get("parent_id")
 						},
 						method:'POST',
 						headers:{ 'Accept':'application/json;'},

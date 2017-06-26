@@ -30,10 +30,10 @@ public class Org {
 	@Column(length=30,nullable=true,unique=false)
 	@FieldDefine(title="编码",sort=6)
 	private String code;
-	
+	@FieldDefine(title="是否是根节点",sort=4,hidden=true)
 	private Boolean isroot=false;//是否是根节点
-	@FieldDefine(title="层级",sort=4,hidden=false)	
-	private Integer level;
+	@FieldDefine(title="层级",sort=4,hidden=true)	
+	private Integer layer;//第几层
 	private Boolean status;//状态
 	@FieldDefine(title="排序",sort=4,hidden=false)	
 	private Integer sort;
@@ -44,32 +44,34 @@ public class Org {
 	@Column(length=30,nullable=true)
 	@FieldDefine(title="传真",sort=4,hidden=false)	
 	private String fax;
-	@Column(length=30,nullable=true)
+	@Column(length=80,nullable=true)
 	@FieldDefine(title="地址",sort=4,hidden=false)	
 	private String address;
-	@Column(length=30,nullable=true)
+	@Column(length=10,nullable=true)
 	@FieldDefine(title="邮编",sort=4,hidden=false)	
 	private String postalcode;
-	@Column(length=30,nullable=true)
+	@Column(length=50,nullable=true)
 	@FieldDefine(title="E-mail",sort=4,hidden=false)	
 	private String email;
-	@Column(length=30,nullable=true)
+	@Column(length=120,nullable=true)
 	@FieldDefine(title="网址",sort=4,hidden=false)	
 	private String web;
-	@Column(length=30,nullable=true)
+	@Column(length=300,nullable=true)
 	@FieldDefine(title="介绍",sort=4,hidden=false)	
 	private String introduction;
 	
+	@FieldDefine(title="是否已删除",sort=4,hidden=true)
 	private Boolean isdel=false;//是不是已经删除了，逻辑删除
 	@Column(length=36,nullable=true)
-	@FieldDefine(title="操作者id",sort=4,hidden=false)
+	@FieldDefine(title="操作者id",sort=4,hidden=true)
 	private String operator_id;//最后一次操作的人
-	private Date operatetime;//最后一次操作的时间
+	@FieldDefine(title="结束时间",sort=4,hidden=true)	
+	private Date operatetime;//最后一次操作的时间,更新或者创建，删除
 	
 	@Column(length=36,nullable=true)
 	@FieldDefine(title="组织单元类型",sort=4,hidden=false)	
 	private String orgtype_id;
-	@Column(length=30,nullable=true)
+	@Column(length=36,nullable=true)
 	@FieldDefine(title="父id",sort=4,hidden=true)	
 	private String parent_id;
 	
@@ -77,6 +79,7 @@ public class Org {
 	private Date createdate;//第一次创建的时间
 	@FieldDefine(title="结束时间",sort=4,hidden=true)	
 	private Date enddate;//关闭的时间
+	
 	public String getId() {
 		return id;
 	}
@@ -101,12 +104,7 @@ public class Org {
 	public void setIsroot(Boolean isroot) {
 		this.isroot = isroot;
 	}
-	public Integer getLevel() {
-		return level;
-	}
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
+
 	public Boolean getStatus() {
 		return status;
 	}
@@ -202,6 +200,12 @@ public class Org {
 	}
 	public void setEnddate(Date enddate) {
 		this.enddate = enddate;
+	}
+	public Integer getLayer() {
+		return layer;
+	}
+	public void setLayer(Integer layer) {
+		this.layer = layer;
 	}
 	
 

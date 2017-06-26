@@ -27,11 +27,12 @@ public static final class Org {
 	public static final String email="email";
 	public static final String web="web";
 	public static final String introduction="introduction";
+	public static final String isdel="isdel";
 	public static final String operator_id="operator_id";
 	public static final String operatetime="operatetime";
 	public static final String orgtype_id="orgtype_id";
 	public static final String parent_id="parent_id";
-	public static final String begindate="begindate";
+	public static final String createdate="createdate";
 	public static final String enddate="enddate";
 }
 public static final class OrgChange {

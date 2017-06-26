@@ -1,7 +1,7 @@
 /**
   * 只能选择组织单元
  */
-Ext.define('Ems.org.OrgOnlyTreeQuery', {
+Ext.define('Ems.org.OrgTreeQuery', {
     extend: 'Ext.tree.Panel',
     requires:['Ems.org.Org'],
     displayField:'name',
@@ -13,14 +13,14 @@ Ext.define('Ems.org.OrgOnlyTreeQuery', {
 	       	autoLoad:true,
 	       	nodeParam :'parent_id',//传递到后台的数据，默认是node
 	       	//model:'Ems.org.Org',
-	       	fields:['id','name','leaf','orgno','remark','type'],
+	       	fields:['id','name','leaf','parent_id','orgtype_id'],
 			root: {
 			    expanded: true,
-			    name:"宁波东望" 
+			    name:"根节点" 
 			},
 			proxy:{
 				type:'ajax',
-				url:Ext.ContextPath+'/org/queryOnlyOrg.do',
+				url:Ext.ContextPath+'/org/query.do',
 				actionMethods: { read: 'POST' },
 				extraParams:{
 					exclude_id:me.exclude_id

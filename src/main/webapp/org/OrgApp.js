@@ -1,6 +1,7 @@
 Ext.require("Ems.org.Org");
 Ext.require("Ems.org.OrgTree");
 Ext.require("Ems.org.OrgForm");
+Ext.require('Ems.org.OrgFormRead');
 Ext.onReady(function(){
 	var tree=Ext.create('Ems.org.OrgTree',{
 		title:'组织维护(右键)',
@@ -9,54 +10,15 @@ Ext.onReady(function(){
 		collapsible : true,
 		region:'west'
 	});
-	var usergrid=Ext.create('Ems.org.PositionUserGrid',{
-		title:'用户维护',
+	var orgFormRead=Ext.create('Ems.org.OrgFormRead',{
+		title:'基本信息',
 		region:'center'
 	});
 	
-//	var positionStoreGrid=Ext.create("Ems.org.PositionStoreGrid",{
-//		title:'仓库权限',
-//		listeners : {
-//			storeSelect : function(record, type) {
-//				var params = {
-//					position_id:window.selected_position.get("id"),
-//					org_id : record.get("org_id"),
-//					look : record.get("look"),
-//					edit : record.get("edit")
-//				};
-//				Ext.Ajax.request({
-//					url : Ext.ContextPath + "/position/selectStore.do",
-//					params : params,
-//					method : 'POST',
-//					success : function(response) {
-//						record.commit();
-//					}
-//
-//				});
-//			},
-//			storeDeselect : function(record, type) {
-//				var params = {
-//					position_id:window.selected_position.get("id"),
-//					org_id : record.get("org_id"),
-//					look : record.get("look"),
-//					edit : record.get("edit")
-//				};
-//				Ext.Ajax.request({
-//					url : Ext.ContextPath + "/position/deselectStore.do",
-//					params : params,
-//					method : 'POST',
-//					success : function(response) {
-//						record.commit();
-//					}
-//
-//				});
-//			}
-//		}
-//	});
-	
+
 	var tabpanel=Ext.create('Ext.tab.Panel',{
 		region:'center',
-		items:[usergrid],
+		items:[orgFormRead],
 		listeners:{
 	    	render:function(tabpanel){
 	    		tabpanel.mask();
@@ -70,19 +32,21 @@ Ext.onReady(function(){
 	
 	tree.on("itemclick",function( view, record, item, index, e, eOpts ){
 	
-		if(record.get("type")=="position"){		
+		if(record.get("id")!="root"){		
 			tabpanel.unmask();
 		} else {
 			tabpanel.mask();
 			return;
 		}
+		
+		orgFormRead.load(record.get("id"));
 
-		window.selected_position=record;
-		usergrid.getStore().getProxy().extraParams=Ext.apply(usergrid.getStore().getProxy().extraParams,{
-			"params['position_id']":record.get("id"),
-			"params['org_id']":record.get("org_id")
-		});
-		usergrid.getStore().reload();
+//		window.selected_position=record;
+//		usergrid.getStore().getProxy().extraParams=Ext.apply(usergrid.getStore().getProxy().extraParams,{
+//			"params['position_id']":record.get("id"),
+//			"params['org_id']":record.get("org_id")
+//		});
+//		usergrid.getStore().reload();
 //
 //		//刷新整颗权限树
 //		positionStoreGrid.getStore().getProxy().extraParams=Ext.apply(positionStoreGrid.getStore().getProxy().extraParams,{

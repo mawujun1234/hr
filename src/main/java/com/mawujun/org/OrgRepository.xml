@@ -4,28 +4,29 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
-<mapper namespace="com.mawujun.constant.ConstantRepository">
+<mapper namespace="com.mawujun.org.OrgRepository">
 	<!-- 查询语句，会自动分页-->
 	<sql id="queryPage_where">
-		<where>
-		<if test="id!=null and id!=''">
-			and id like '%${id}%'
-		</if>
-		<if test="name!=null and name!=''">
-			and name like '%${name}%'
-		</if>
-		</where>
+	<where>
+	</where>
 	</sql>
-    <select id="queryPage" resultType="com.mawujun.constant.Constant" parameterType="map">
-    	select * from t_constant a
+    <select id="queryPage" resultType="com.mawujun.org.Org" parameterType="map">
+    	select * from hr_org a
     	<include refid="queryPage_where" />	
-    	order by a.sort
     </select> 
      <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
     <select id="queryPage_count" resultType="int" parameterType="map">
     	select count(a.id)
-		from t_constant a
-		<include refid="queryPage_where" />	
+		from hr_org a
+		<include refid="queryPage_where"/>	
+    </select>
+    
+    <select id="load" resultType="com.mawujun.org.OrgVO" parameterType="map">
+    	select a.*,b.name as operator_name ,c.name as orgtype_name 
+    	from hr_org a
+    	inner join t_user b on a.operator_id=b.id
+    	inner join t_constantitem c on a.orgtype_id=c.id
+    	where a.id=#{id}
     </select>
 </mapper>
 
