@@ -15,6 +15,9 @@ Ext.onReady(function(){
 		region:'center'
 	});
 	
+	var positionGrid=Ext.create('Ems.org.PositionGrid',{
+		title:'拥有的岗位'
+	})
 
 	var tabpanel=Ext.create('Ext.tab.Panel',{
 		region:'center',
@@ -42,11 +45,10 @@ Ext.onReady(function(){
 		orgFormRead.load(record.get("id"));
 
 //		window.selected_position=record;
-//		usergrid.getStore().getProxy().extraParams=Ext.apply(usergrid.getStore().getProxy().extraParams,{
-//			"params['position_id']":record.get("id"),
-//			"params['org_id']":record.get("org_id")
-//		});
-//		usergrid.getStore().reload();
+		positionGrid.getStore().getProxy().extraParams=Ext.apply(positionGrid.getStore().getProxy().extraParams,{
+			"org_id":record.get("org_id")
+		});
+		positionGrid.getStore().reload();
 //
 //		//刷新整颗权限树
 //		positionStoreGrid.getStore().getProxy().extraParams=Ext.apply(positionStoreGrid.getStore().getProxy().extraParams,{

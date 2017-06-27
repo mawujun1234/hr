@@ -17,7 +17,7 @@ public static final class Org {
 	public static final String name="name";
 	public static final String code="code";
 	public static final String isroot="isroot";
-	public static final String level="level";
+	public static final String layer="layer";
 	public static final String status="status";
 	public static final String sort="sort";
 	public static final String phonenumber="phonenumber";
@@ -35,24 +35,12 @@ public static final class Org {
 	public static final String createdate="createdate";
 	public static final String enddate="enddate";
 }
-public static final class OrgChange {
+public static final class Position {
 	public static final String id="id";
 	public static final String name="name";
-	public static final String code="code";
-	public static final String isroot="isroot";
-	public static final String level="level";
-	public static final String status="status";
-	public static final String sort="sort";
-	public static final String phonenumber="phonenumber";
-	public static final String fax="fax";
-	public static final String address="address";
-	public static final String postalcode="postalcode";
-	public static final String email="email";
-	public static final String web="web";
-	public static final String introduction="introduction";
-	public static final String orgtype_id="orgtype_id";
-	public static final String operator_id="operator_id";
-	public static final String operatetime="operatetime";
+	public static final String remark="remark";
+	public static final String org_id="org_id";
+	public static final String positiontype_id="positiontype_id";
 }
 public static final class Menu {
 	public static final String id="id";

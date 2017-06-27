@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- mawujun qq:16064988 e-mail:16064988@qq.com-->
+<mapper namespace="com.mawujun.org.PositionRepository">
+	<!-- 查询语句，会自动分页-->
+	<sql id="queryPage_where">
+	<where>
+	</where>
+	</sql>
+    <select id="queryPage" resultType="com.mawujun.org.Position" parameterType="map">
+    	select * from hr_position a
+    	<include refid="queryPage_where" />	
+    </select> 
+     <!-- 名称模式为：****_count,也可以不写，但如果查询叫复杂的话，自己写有助于控制查询性能-->
+    <select id="queryPage_count" resultType="int" parameterType="map">
+    	select count(a.id)
+		from hr_position a
+		<include refid="queryPage_where" />	
+    </select>
+    
+    <select id="queryByOrg" resultType="com.mawujun.org.PositionVO" parameterType="map">
+    	select a.*,c.name as positiontype_name 
+    	from hr_position a
+    	inner join t_constantitem c on a.positiontype_id=c.id
+    	where a.org_id=#{org_id}
+    </select>
+</mapper>
+
