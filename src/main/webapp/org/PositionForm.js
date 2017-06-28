@@ -28,18 +28,25 @@ Ext.define('Ems.org.PositionForm',{
             selectOnFocus:true,
 	        xtype:'textfield'
 	    },
+	     {
+	        fieldLabel: '岗位类型',
+	        name: 'positiontype_id',
+	        //selFirst:true,
+	        showBlank:false,
+            allowBlank: false,
+            afterLabelTextTpl: Ext.required,
+            //value:'Y',
+            blankText:"岗位类型不允许为空",
+	        xtype:'constantcombo',
+	        constant_id:'positiontype'
+	    },
 		{
 	        fieldLabel: '备注',
 	        name: 'remark',
             selectOnFocus:true,
 	        xtype:'textfield'
 	    },
-		{
-	        fieldLabel: '职位类型',
-	        name: 'positiontype_id',
-            selectOnFocus:true,
-	        xtype:'textfield'
-	    },
+	   
 		{
 	        fieldLabel: 'id',
 	        name: 'id',

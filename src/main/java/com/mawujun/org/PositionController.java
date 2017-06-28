@@ -43,9 +43,8 @@ public class PositionController {
 
 	@RequestMapping("/position/queryByOrg.do")
 	@ResponseBody
-	public List<Position> queryByOrg(String org_id) {	
-		List<Position> positiones=positionService.query(Cnd.select()
-				.andEquals(M.Position.org_id, org_id));
+	public List<PositionVO> queryByOrg(String org_id) {	
+		List<PositionVO> positiones=positionService.queryByOrg(org_id);
 		return positiones;
 	}
 	

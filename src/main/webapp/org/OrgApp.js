@@ -2,6 +2,7 @@ Ext.require("Ems.org.Org");
 Ext.require("Ems.org.OrgTree");
 Ext.require("Ems.org.OrgForm");
 Ext.require('Ems.org.OrgFormRead');
+Ext.require('Ems.org.PositionGrid');
 Ext.onReady(function(){
 	var tree=Ext.create('Ems.org.OrgTree',{
 		title:'组织维护(右键)',
@@ -21,7 +22,7 @@ Ext.onReady(function(){
 
 	var tabpanel=Ext.create('Ext.tab.Panel',{
 		region:'center',
-		items:[orgFormRead],
+		items:[orgFormRead,positionGrid],
 		listeners:{
 	    	render:function(tabpanel){
 	    		tabpanel.mask();
@@ -46,7 +47,7 @@ Ext.onReady(function(){
 
 //		window.selected_position=record;
 		positionGrid.getStore().getProxy().extraParams=Ext.apply(positionGrid.getStore().getProxy().extraParams,{
-			"org_id":record.get("org_id")
+			"org_id":record.get("id")
 		});
 		positionGrid.getStore().reload();
 //

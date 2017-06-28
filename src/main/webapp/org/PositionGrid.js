@@ -12,13 +12,16 @@ Ext.define('Ems.org.PositionGrid',{
       var me = this;
       me.columns=[
       	{xtype: 'rownumberer'},
-		{dataIndex:'name',header:'岗位名称'
+		{dataIndex:'name',header:'岗位名称',width:220
         },
-		{dataIndex:'remark',header:'备注'
-        },
+		
 //		{dataIndex:'positiontype_id',header:'职位类型'
 //        }
-        {dataIndex:'positiontype_name',header:'职位类型'
+        {dataIndex:'positiontype_name',header:'岗位类型'
+        },
+        {dataIndex:'employee_count',header:'人数'
+        },
+        {dataIndex:'remark',header:'备注'
         }
       ];
       
@@ -107,7 +110,7 @@ Ext.define('Ems.org.PositionGrid',{
 
 		});
 		child.set("id",null);
-		
+		child.set("org_id",me.getStore().getProxy().extraParams.org_id)
 		var formpanel=Ext.create('Ems.org.PositionForm',{});
 		formpanel.loadRecord(child);
 		
@@ -136,7 +139,7 @@ Ext.define('Ems.org.PositionGrid',{
     		Ext.Msg.alert("提醒","请选择一行数据!");
     		return;
     	}
-
+		
 		var formpanel=Ext.create('Ems.org.PositionForm',{});
 		formpanel.loadRecord(record);
 		
