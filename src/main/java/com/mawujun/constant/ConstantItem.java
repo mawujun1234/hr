@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.mawujun.generator.model.FK;
 import com.mawujun.generator.model.FieldDefine;
 import com.mawujun.generator.model.ShowType;
 
@@ -26,11 +27,17 @@ public class ConstantItem {
 	
 	@FieldDefine(title="constant_id",sort=7,hidden=true)
 	@Column(length=36,nullable=false)
+	@FK(cls=Constant.class,column="id")
 	private String constant_id;
 
+	public String getKey() {
+		return id;
+	}
+	
 	public String getId() {
 		return id;
 	}
+	
 
 	public void setId(String id) {
 		this.id = id;

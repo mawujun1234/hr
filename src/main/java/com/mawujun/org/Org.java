@@ -10,6 +10,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.mawujun.constant.ConstantItem;
+import com.mawujun.generator.model.FK;
 import com.mawujun.generator.model.FieldDefine;
 
 @Entity
@@ -70,6 +72,7 @@ public class Org {
 	
 	@Column(length=36,nullable=true)
 	@FieldDefine(title="组织单元类型",sort=4,hidden=false)	
+	@FK(cls=ConstantItem.class,column="id")
 	private String orgtype_id;
 	@Column(length=36,nullable=true)
 	@FieldDefine(title="父id",sort=4,hidden=true)	

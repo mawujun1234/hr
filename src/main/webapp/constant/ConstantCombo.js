@@ -31,7 +31,7 @@ Ext.define('Ems.constant.ConstantCombo',{
 	editable:true,
 	forceSelection:true,
 	displayField: 'name',
-	valueField: 'id',
+	valueField: 'key',
 //    allowBlank: false,
 //    afterLabelTextTpl: Ext.required,
 //    blankText:"菜单类型不允许为空",
@@ -51,7 +51,7 @@ Ext.define('Ems.constant.ConstantCombo',{
 		}
 		
 		me.store=Ext.create('Ext.data.Store',{
-			fields: ['id', 'name'],
+			fields: ['key', 'name'],
 			autoLoad:me.autoLoad,
 			proxy: {
 			    actionMethods :{read: 'POST'},

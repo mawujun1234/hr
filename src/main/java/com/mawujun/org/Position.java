@@ -7,6 +7,8 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.mawujun.constant.ConstantItem;
+import com.mawujun.generator.model.FK;
 import com.mawujun.generator.model.FieldDefine;
 
 @Entity(name="hr_position")
@@ -33,10 +35,12 @@ public class Position {
 	
 	@FieldDefine(title="组织id",hidden=true)
 	@Column(length=36,nullable=false)
+	@FK(cls=Org.class,column="id")
 	private String org_id;
 	
 	@FieldDefine(title="职位类型",hidden=false)
 	@Column(length=36,nullable=true)
+	@FK(cls=ConstantItem.class,column="id")
 	private String positiontype_id;
 	
 	

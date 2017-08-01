@@ -10,6 +10,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.mawujun.constant.ConstantItem;
+import com.mawujun.generator.model.FK;
 import com.mawujun.generator.model.FieldDefine;
 import com.mawujun.generator.model.ShowType;
 
@@ -49,6 +51,7 @@ public class Menu {
 	
 	@FieldDefine(title="父id",hidden=true)
 	@Column(length=36) 
+	@FK(cls=Menu.class,column="id")
 	private String parent_id;//上级rolegroup的id
 	
 	@FieldDefine(title="排序")//

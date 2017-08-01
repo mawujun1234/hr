@@ -9,6 +9,8 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.mawujun.constant.ConstantItem;
+import com.mawujun.generator.model.FK;
 import com.mawujun.generator.model.FieldDefine;
 import com.mawujun.generator.model.ShowType;
 
@@ -47,6 +49,7 @@ public class Role {
 	
 	@Column(length=36)
 	@FieldDefine(title="角色组id",hidden=true)
+	@FK(cls=Role.class,column="id")
 	private String parent_id;//上级rolegroup的id
 	
 	public Boolean getLeaf() {
