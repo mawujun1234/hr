@@ -7,9 +7,9 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.mawujun.annotation.FK;
+import com.mawujun.annotation.FieldDefine;
 import com.mawujun.constant.ConstantItem;
-import com.mawujun.generator.model.FK;
-import com.mawujun.generator.model.FieldDefine;
 
 @Entity(name="hr_position")
 public class Position {

@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.mawujun.generator.model.FieldDefine;
+import com.mawujun.annotation.FieldDefine;
 /**
  * 组织单元汇报关系
  * @author mawujun qq:16064988 mawujun1234@163.com

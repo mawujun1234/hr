@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.mawujun.generator.model.FieldDefine;
+import com.mawujun.annotation.FieldDefine;
 
 /**
  * 常量

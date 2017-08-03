@@ -9,10 +9,10 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.mawujun.annotation.FK;
+import com.mawujun.annotation.FieldDefine;
+import com.mawujun.annotation.ShowType;
 import com.mawujun.constant.ConstantItem;
-import com.mawujun.generator.model.FK;
-import com.mawujun.generator.model.FieldDefine;
-import com.mawujun.generator.model.ShowType;
 
 /**
  * 只设计成两级，第一级是rolegroup，第二级才是角色

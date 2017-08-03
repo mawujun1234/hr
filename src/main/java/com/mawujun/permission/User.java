@@ -10,9 +10,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.mawujun.annotation.FieldDefine;
+import com.mawujun.annotation.ShowType;
 import com.mawujun.controller.shiro.IShiroUser;
-import com.mawujun.generator.model.FieldDefine;
-import com.mawujun.generator.model.ShowType;
 
 @Entity
 @Table(name="t_user")
